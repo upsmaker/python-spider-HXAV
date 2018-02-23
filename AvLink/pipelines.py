@@ -8,12 +8,29 @@
 import json
 
 class AvlinkPipeline(object):
-    def __init__(self):
-        self.fsave=open('toupai.json','w+')
+    def open_spider(self,spider):
+        print "=================Open spider"
+        print spider.name
+        if cmp(spider.name,"toupai")==0:
+            
+            self.ftoupai=open('toupai.json','w+')
+        elif cmp(spider.name, "yzsq")==0:
+            self.fyzsq=open('yzsq.json','w+')
         pass
     def process_item(self, item, spider):
-        self.fsave.write(json.dumps(dict(item))+"\n")
+        if cmp(spider.name,"yzsq")==0:
+            print "===========YZSQ"
+            self.fyzsq.write(json.dumps(dict(item))+"\n")
+        elif cmp(spider.name,"toupai")==0:
+            print "===========TOUPAI"
+            self.ftoupai.write(json.dumps(dict(item))+"\n")
         return item
-    def closed(self):
-        self.fsave.close()
-        pass
+    def close_spider(self,spider):
+        print "=================Close spider"
+        if cmp(spider.name,"toupai")==0:
+            self.ftoupai.close()
+        elif cmp(spider.name, "yzsq")==0:
+            self.fyzsq.close()
+        
+        
+        
